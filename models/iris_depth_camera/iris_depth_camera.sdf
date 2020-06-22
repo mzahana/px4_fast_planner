@@ -5,6 +5,18 @@
       <uri>model://iris</uri>
     </include>
 
+    <!-- Groundtruth plugin -->
+    <plugin name="robot_groundtruth_sim" filename="libgazebo_ros_p3d.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100.0</updateRate>
+      <bodyName>iris::base_link</bodyName>
+      <topicName>odometry</topicName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <frameName>world</frameName>
+      <xyzOffsets>0 0 0</xyzOffsets>
+      <rpyOffsets>0 0 0</rpyOffsets>
+    </plugin>
+
     <include>
       <uri>model://depth_camera_new</uri>
       <pose>0.1 0 0 0 0 0</pose>
