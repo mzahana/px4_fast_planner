@@ -30,7 +30,7 @@ if __name__ == '__main__':
         pose_msg.header.stamp = rospy.Time.now()
         pose_msg.pose.position.x = trans[0]
         pose_msg.pose.position.y = trans[1]
-        pose_msg.pose.position.x = trans[2]
+        pose_msg.pose.position.z = trans[2]
         pose_msg.pose.orientation.x = rot[0]
         pose_msg.pose.orientation.y = rot[1]
         pose_msg.pose.orientation.z = rot[2]
