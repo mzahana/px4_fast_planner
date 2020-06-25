@@ -70,11 +70,11 @@
     <!-- depth filter -->
     <param name="sdf_map/use_depth_filter" value="true"/>
     <param name="sdf_map/depth_filter_tolerance" value="0.15"/>
-    <param name="sdf_map/depth_filter_maxdist"   value="4.5"/>
+    <param name="sdf_map/depth_filter_maxdist"   value="7"/>
     <param name="sdf_map/depth_filter_mindist"   value="0.2"/>
     <param name="sdf_map/depth_filter_margin"    value="2"/>
     <param name="sdf_map/k_depth_scaling_factor" value="1000.0"/>
-    <param name="sdf_map/skip_pixel" value="3"/>
+    <param name="sdf_map/skip_pixel" value="2"/>
     <!-- local fusion -->
     <param name="sdf_map/p_hit"  value="0.65"/>
     <param name="sdf_map/p_miss" value="0.35"/>
