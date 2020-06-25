@@ -21,6 +21,9 @@ cd ~/catkin_ws/src/px4_fast_planner/install
 
 The `setup.sh` script install PX4 v1.10.1, modified `mavros_controllers` package, and modified `Fast-Planner` package.
 
+## Installtion inside docker container
+You can setup the system inside a docker contaioner that already has Ubuntu 18 + ROS Melodic + PX4 frimware v1.10.1. Use [this repository](https://github.com/mzahana/containers) to setup docker and the containers, then install setup px4_fast_planner as mentioned above.
+
 # Running in Simulation
 * Open a termianl, and run the following command,
 ```sh
