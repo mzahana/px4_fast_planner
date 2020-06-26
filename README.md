@@ -5,6 +5,12 @@ This packges provides installtion and launch files required for running PX4 with
 
 [![px4_fast_planner](https://img.youtube.com/vi/KXXjLYjIxD0/0.jpg)](https://youtu.be/KXXjLYjIxD0 "px4_fast_planner")
 
+**#######**
+
+**If this helps you in your project(s), please give a star to this
+ repository and [Fast-Planner](https://github.com/HKUST-Aerial-Robotics/Fast-Planner) and [mavros_controllers](https://github.com/Jaeyoung-Lim/mavros_controllers). Thank you!**
+ 
+ **#######**
 
 # Installation
 This setup is tested on Ubuntu 18 + ROS Melodic
