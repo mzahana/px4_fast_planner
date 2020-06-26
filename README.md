@@ -1,7 +1,7 @@
 # px4_fast_planner
-Integration of [Fast-Planner](https://github.com/HKUST-Aerial-Robotics/Fast-Planner) with [PX4](https://github.com/PX4/Firmware) for planning real-time collision-free and obstacle-free trajectories in bounded environment. This allows you to fly a multi-rotor drone ( equipped with a depth camera and on-board computer) autonomously while avoiding obstacles.
+Integration of [Fast-Planner](https://github.com/HKUST-Aerial-Robotics/Fast-Planner) with [PX4](https://github.com/PX4/Firmware) for planning real-time collision-free and obstacle-free trajectories in bounded environment. This allows you to fly a multi-rotor drone ( equipped with a PX4 autopilot, depth camera, and on-board computer) autonomously while avoiding obstacles.
 
-This packges provides installtion and launch files required for running PX4 with Fast-Planner through mavros_controllers package. Modified vresions of [Fast-Planner](https://github.com/mzahana/Fast-Planner) (for Ubuntu 18 + ROS Melodic) and [mavros_controllers](https://github.com/mzahana/mavros_controllers-1) (adding required interface for Fast-Planner ) are used
+This packges provides installation and launch files required for running PX4 with Fast-Planner through mavros_controllers package. Modified vresions of [Fast-Planner](https://github.com/mzahana/Fast-Planner) (for Ubuntu 18 + ROS Melodic) and [mavros_controllers](https://github.com/mzahana/mavros_controllers-1) (adding required interface for Fast-Planner ) are used.
 
 [![px4_fast_planner](https://img.youtube.com/vi/KXXjLYjIxD0/0.jpg)](https://youtu.be/KXXjLYjIxD0 "px4_fast_planner")
 
@@ -30,8 +30,8 @@ cd ~/catkin_ws/src/px4_fast_planner/install
 
 The `setup.sh` script install PX4 v1.10.1, modified `mavros_controllers` package, and modified `Fast-Planner` package.
 
-## Installtion inside docker container
-You can setup the system inside a docker contaioner that already has Ubuntu 18 + ROS Melodic + PX4 frimware v1.10.1. Use [this repository](https://github.com/mzahana/containers) to setup docker and the containers, then install setup px4_fast_planner as mentioned above.
+## Installation inside docker container
+You can setup the system inside a docker container that already has Ubuntu 18 + ROS Melodic + PX4 frimware v1.10.1. Use [this repository](https://github.com/mzahana/containers) to setup docker and required container, then install setup px4_fast_planner as mentioned above.
 
 # Running in Simulation
 * Open a termianl, and run the following command,
