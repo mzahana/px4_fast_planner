@@ -36,7 +36,7 @@ You can setup the system inside a docker container that already has Ubuntu 18 + 
 # Running in Simulation
 * Open a termianl, and run the following command,
 ```sh
-roslaunch px4_fast_planner sitl_px4_fast_planner.launch
+roslaunch px4_fast_planner px4_fast_planner.launch
 ```
 **NOTE: It may take some time to download some Gazebo world models in the first time you run the simulation**
 

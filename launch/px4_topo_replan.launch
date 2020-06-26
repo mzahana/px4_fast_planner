@@ -1,10 +1,15 @@
 <launch>
   <!-- global parameters -->
-  <arg name="map_size_x" value="40.0"/>
-  <arg name="map_size_y" value="40.0"/>
-  <arg name="map_size_z" value=" 5.0"/>
+  <arg name="map_size_x" default="40.0"/>
+  <arg name="map_size_y" default="40.0"/>
+  <arg name="map_size_z" default=" 5.0"/>
 
-  <arg name="odom_topic" value="/mavros/local_position/odom" />
+  <arg name="odom_topic" default="/mavros/local_position/odom" />
+  <arg name="camera_pose_topic" default="/camera/pose"/>
+  <arg name="depth_topic" default="/camera/depth/image_raw"/>
+
+  <arg name="max_vel" default="1.0" />
+  <arg name="max_acc" default="2.5" />
 
   <!-- main algorithm params -->
   <include file="$(find px4_fast_planner)/launch/topo_algorithm.xml">
@@ -17,8 +22,8 @@
     <!-- camera pose: transform of camera frame in the world frame -->
     <!-- depth topic: depth image, 640x480 by default -->
     <!-- don't set cloud_topic if you already set these ones! -->
-    <arg name="camera_pose_topic" value="/camera/pose"/>
-    <arg name="depth_topic" value="/camera/depth/image_raw"/>
+    <arg name="camera_pose_topic" value="$(arg camera_pose_topic)"/>
+    <arg name="depth_topic" value="$(arg depth_topic)"/>
 
     <!-- topic of point cloud measurement, such as from LIDAR  -->
     <!-- don't set camera pose and depth, if you already set this one! -->
@@ -33,8 +38,8 @@
 
 
     <!-- maximum velocity and acceleration the drone will reach -->
-    <arg name="max_vel" value="1.0" />
-    <arg name="max_acc" value="2.5" />
+    <arg name="max_vel" value="$(arg max_vel)" />
+    <arg name="max_acc" value="$(arg max_acc)" />
 
     <!-- 1: use 2D Nav Goal to select goal  -->
     <!-- 2: use global waypoints below  -->

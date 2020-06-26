@@ -108,7 +108,7 @@
 
   <!-- topology path finding -->
     <param name="topo_prm/sample_inflate_x" value="1.0" type="double"/>
-    <param name="topo_prm/sample_inflate_y" value="3.5" type="double"/>
+    <param name="topo_prm/sample_inflate_y" value="5.5" type="double"/>
     <param name="topo_prm/sample_inflate_z" value="1.0" type="double"/>
     <param name="topo_prm/clearance" value="0.3" type="double"/>
     <param name="topo_prm/max_sample_time" value="0.005" type="double"/>
