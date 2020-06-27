@@ -26,6 +26,11 @@ git clone https://github.com/mzahana/px4_fast_planner.git
 cd ~/catkin_ws/src/px4_fast_planner/install
 ./setup.sh
 ```
+The script will ask if PX4 is to be installled or not. You would likely want to skip this if you are doing the setup on an on-board computer. To do that, just pass `n` to the `setup.sh` script
+```sh
+cd ~/catkin_ws/src/px4_fast_planner/install
+./setup.sh n
+```
 **NOTE: you may need to provide credentials to `sudo` when prompted, for the script to continue**
 
 The `setup.sh` script install PX4 v1.10.1, modified `mavros_controllers` package, and modified `Fast-Planner` package.
