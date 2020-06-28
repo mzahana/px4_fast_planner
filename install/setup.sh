@@ -140,21 +140,18 @@ fi
 
 ####################################### mavros_controllers setup #######################################
 echo -e "\e[1;33m Adding mavros_controllers \e[0m"
-#Adding mavros_controllers-1
-if [ ! -d "$CATKIN_SRC/mavros_controllers-1" ]; then
-    echo "Cloning the mavros_controllers-1 repo ..."
+#Adding mavros_controllers
+if [ ! -d "$CATKIN_SRC/mavros_controllers" ]; then
+    echo "Cloning the mavros_controllers repo ..."
     cd $CATKIN_SRC
-    git clone https://github.com/mzahana/mavros_controllers-1.git
+    git clone https://github.com/Jaeyoung-Lim/mavros_controllers.git
     cd ../
 else
-    echo "mavros_controllers-1 already exists. Just pulling ..."
-    cd $CATKIN_SRC/mavros_controllers-1
+    echo "mavros_controllers already exists. Just pulling ..."
+    cd $CATKIN_SRC/mavros_controllers
     git pull
     cd ../ 
 fi
-# checking out branch compatible with fast planner
-cd $CATKIN_SRC/mavros_controllers-1
-git checkout fast_planner_interface
 
 #Adding catkin_simple
 if [ ! -d "$CATKIN_SRC/catkin_simple" ]; then
