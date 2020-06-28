@@ -60,6 +60,11 @@
         <param name="pose_topic" value="camera/pose" />
     </node>
 
+    <node pkg="px4_fast_planner" name="traj_msg_converter" type="trajectory_msg_converter.py" output="screen">
+        <param name="fast_planner_traj_topic" value="planning/ref_traj"/>
+        <param name="traj_pub_topic" value="command/trajectory"/>
+    </node>
+
     <!-- Rviz -->
     <include file="$(find px4_fast_planner)/launch/rviz.launch" />
 
