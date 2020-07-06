@@ -17,12 +17,12 @@ fi
 CATKIN_WS=${HOME}/catkin_ws
 CATKIN_SRC=${HOME}/catkin_ws/src
 
-if [ ! -d "$CATKIN_WS"]; then
+if [ ! -d "$CATKIN_WS" ]; then
 	echo "Creating $CATKIN_WS ... "
 	mkdir -p $CATKIN_SRC
 fi
 
-if [ ! -d "$CATKIN_SRC"]; then
+if [ ! -d "$CATKIN_SRC" ]; then
 	echo "Creating $CATKIN_SRC ..."
 fi
 
@@ -32,6 +32,7 @@ catkin init
 catkin config --merge-devel
 catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release
 
+grep -xF 'source '${HOME}'/catkin_ws/devel/setup.bash' ${HOME}/.bashrc || echo "source $HOME/catkin_ws/devel/setup.bash" >> $HOME/.bashrc
 ####################################### Setup PX4 v1.10.1 #######################################
 if [ "$BUILD_PX4" != "false" ]; then
 
@@ -44,12 +45,13 @@ if [ "$BUILD_PX4" != "false" ]; then
         wget \
         ;
     # script directory
+    cd ${CATKIN_SRC}/px4_fast_planner/install
     DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
     # check requirements.txt exists (script not run in source tree)
     REQUIREMENTS_FILE="px4_requirements.txt"
-    if [[ ! -f "${DIR}/${REQUIREMENTS_FILE}" ]]; then
-        echo "FAILED: ${REQUIREMENTS_FILE} needed in same directory as setup_px4.sh (${DIR})."
+    if [ ! -f "${DIR}/${REQUIREMENTS_FILE}" ]; then
+        echo "FAILED: ${REQUIREMENTS_FILE} needed in same directory as setup.sh (${DIR})."
         return 1
     fi
 
@@ -133,6 +135,10 @@ if [ "$BUILD_PX4" != "false" ]; then
     grep -xF 'export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/Firmware' ${HOME}/.bashrc || echo "export ROS_PACKAGE_PATH=\$ROS_PACKAGE_PATH:~/Firmware" >> ${HOME}/.bashrc
     grep -xF 'export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/Firmware/Tools/sitl_gazebo' ${HOME}/.bashrc || echo "export ROS_PACKAGE_PATH=\$ROS_PACKAGE_PATH:~/Firmware/Tools/sitl_gazebo" >> ${HOME}/.bashrc
     grep -xF 'export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:/usr/lib/x86_64-linux-gnu/gazebo-9/plugins' ${HOME}/.bashrc || echo "export GAZEBO_PLUGIN_PATH=\$GAZEBO_PLUGIN_PATH:/usr/lib/x86_64-linux-gnu/gazebo-9/plugins" >> ${HOME}/.bashrc
+    grep -xF 'export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:'${HOME}'/catkin_ws/src/px4_fast_planner/models' ${HOME}/.bashrc || echo "export GAZEBO_MODEL_PATH=\$GAZEBO_MODEL_PATH:${HOME}/catkin_ws/src/px4_fast_planner/models" >> ${HOME}/.bashrc
+
+    # Copy PX4 SITL param file
+    cp $CATKIN_SRC/px4_fast_planner/config/10017_iris_depth_camera ${HOME}/Firmware/ROMFS/px4fmu_common/init.d-posix/
 
     source ${HOME}/.bashrc
 fi
@@ -220,5 +226,3 @@ cd $CATKIN_WS
 catkin build multi_map_server
 catkin build
 source $CATKIN_WS/devel/setup.bash
-
-grep -xF 'source $HOME/catkin_ws/devel/setup.bash' ${HOME}/.bashrc || echo "source $HOME/catkin_ws/devel/setup.bash" >> $HOME/.bashrc
