@@ -3,6 +3,9 @@
   <arg name="command_input" default="2" />
   <arg name="gazebo_simulation" default="true" />
   <arg name="max_acc" default="5.0" />
+  <arg name="init_pos_x" default="0.0" />
+  <arg name="init_pos_y" default="0.0" />
+  <arg name="init_pos_z" default="2.0" />
   
   <node pkg="geometric_controller" type="geometric_controller_node" name="geometric_controller" output="screen">
   		<param name="mav_name" type="string" value="$(arg mav_name)" />
@@ -18,6 +21,9 @@
           <param name="Kv_x" value="1.5" />
           <param name="Kv_y" value="1.5" />
           <param name="Kv_z" value="3.5" />
+          <param name="init_pos_x" value="$(arg init_pos_x)" />
+          <param name="init_pos_y" value="$(arg init_pos_y)" />
+          <param name="init_pos_z" value="$(arg init_pos_z)" />
   </node>
 
 

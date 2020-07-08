@@ -7,6 +7,7 @@
     <arg name="fcu_url" default="udp://:14540@localhost:14557"/>
 
     <!-- Planner configs -->
+    <arg name="use_kino_planner" default="false" />
     <arg name="map_size_x" default="40.0"/>
     <arg name="map_size_y" default="40.0"/>
     <arg name="map_size_z" default=" 5.0"/>
@@ -17,6 +18,11 @@
 
     <arg name="max_vel" default="1.0" />
     <arg name="max_acc" default="2.5" />
+
+    <!-- Initial target position for the controller-->
+    <arg name="init_pos_x" default="0.0" />
+    <arg name="init_pos_y" default="0.0" />
+    <arg name="init_pos_z" default="1.0" />
 
     <!-- ROS static transformation -->
     <node pkg="tf" type="static_transform_publisher" name="world_map_linker" args="0 0 0 0 0 0 world map 100" />
@@ -29,7 +35,17 @@
     </include>
 
     <!-- Fast planner -->
-    <include file="$(find px4_fast_planner)/launch/px4_topo_replan.launch" >
+    <include unless="$(arg use_kino_planner)" file="$(find px4_fast_planner)/launch/px4_topo_replan.launch" >
+        <arg name="map_size_x" default="$(arg map_size_x)"/>
+        <arg name="map_size_y" default="$(arg map_size_y)"/>
+        <arg name="map_size_z" default="$(arg map_size_z)"/>
+
+        <arg name="odom_topic" default="$(arg odom_topic)" />
+        <arg name="depth_topic" default="$(arg depth_topic)"/>
+        <arg name="camera_pose_topic" default="$(arg camera_pose_topic)"/>
+    </include>
+
+    <include if="$(arg use_kino_planner)" file="$(find px4_fast_planner)/launch/px4_kino_replan.launch" >
         <arg name="map_size_x" default="$(arg map_size_x)"/>
         <arg name="map_size_y" default="$(arg map_size_y)"/>
         <arg name="map_size_z" default="$(arg map_size_z)"/>
@@ -50,6 +66,9 @@
         <param name="Kv_x" value="1.5" />
         <param name="Kv_y" value="1.5" />
         <param name="Kv_z" value="3.5" />
+        <arg name="init_pos_x" value="$(arg init_pos_x)" />
+        <arg name="init_pos_y" value="$(arg init_pos_y)" />
+        <arg name="init_pos_z" value="$(arg init_pos_z)" />
     </include>
 
     <!-- Camera pose publisher -->
