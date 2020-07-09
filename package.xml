@@ -2,12 +2,12 @@
 <package format="2">
   <name>px4_fast_planner</name>
   <version>0.0.0</version>
-  <description>The px4_fast_planner package</description>
+  <description>Integration of Fast-Planner with PX4 autopilot for multi-rotor fast navigation with obstacle avoidance </description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="arrow@todo.todo">arrow</maintainer>
+  <maintainer email="mohamedashraf123@gmail.com">Mohamed Abdelkader</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
