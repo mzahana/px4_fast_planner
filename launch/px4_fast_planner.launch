@@ -19,10 +19,11 @@
     <arg name="max_vel" default="1.0" />
     <arg name="max_acc" default="2.5" />
 
-    <!-- Initial target position for the controller-->
-    <arg name="init_pos_x" default="0.0" />
+    <!-- Initial drone's position in Gazebo -->
+    <arg name="init_pos_x" default="5.0" />
     <arg name="init_pos_y" default="0.0" />
-    <arg name="init_pos_z" default="1.0" />
+    <!-- takeoff height -->
+    <arg name="takeoff_height" default="1.0" />
 
     <!-- ROS static transformation -->
     <node pkg="tf" type="static_transform_publisher" name="world_map_linker" args="0 0 0 0 0 0 world map 100" />
@@ -32,6 +33,8 @@
     <include file="$(find px4_fast_planner)/launch/mavros.launch" >
         <arg name="use_gazebo" value="$(arg use_gazebo)"/>
         <arg name="fcu_url" value="$(arg fcu_url)"/>
+        <arg name="x" value="$(arg init_pos_x)"/>
+        <arg name="y" value="$(arg init_pos_y)"/>
     </include>
 
     <!-- Fast planner -->
@@ -66,9 +69,9 @@
         <param name="Kv_x" value="1.5" />
         <param name="Kv_y" value="1.5" />
         <param name="Kv_z" value="3.5" />
-        <arg name="init_pos_x" value="$(arg init_pos_x)" />
-        <arg name="init_pos_y" value="$(arg init_pos_y)" />
-        <arg name="init_pos_z" value="$(arg init_pos_z)" />
+        <arg name="init_pos_x" value="0.0" />
+        <arg name="init_pos_y" value="0.0" />
+        <arg name="init_pos_z" value="$(arg takeoff_height)" />
     </include>
 
     <!-- Camera pose publisher -->
