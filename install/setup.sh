@@ -42,6 +42,10 @@ grep -xF 'export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/HIVE/PX4-Autopilot/Tools/s
 grep -xF 'export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:/usr/lib/x86_64-linux-gnu/gazebo-9/plugins' ${HOME}/.bashrc || echo "export GAZEBO_PLUGIN_PATH=\$GAZEBO_PLUGIN_PATH:/usr/lib/x86_64-linux-gnu/gazebo-9/plugins" >> ${HOME}/.bashrc
 grep -xF 'export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:'${HOME}'/HIVE/catkin_ws_test/src/px4_fast_planner/models' ${HOME}/.bashrc || echo "export GAZEBO_MODEL_PATH=\$GAZEBO_MODEL_PATH:${HOME}/HIVE/catkin_ws_test/src/px4_fast_planner/models" >> ${HOME}/.bashrc
 
+# Copy PX4 SITL param file
+cp $CATKIN_SRC/px4_fast_planner/config/10017_iris_depth_camera ${HOME}/HIVE/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/
+
+source ${HOME}/.bashrc
 # Install MAVROS
 sudo apt install ros-melodic-mavros ros-melodic-mavros-extras -y
 ####################################### mavros_controllers setup #######################################
