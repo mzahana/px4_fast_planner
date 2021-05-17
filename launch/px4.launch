@@ -1,6 +1,7 @@
 <launch>
 	<!-- vim: set ft=xml noet : -->
 	<!-- example launch script for PX4 based FCU's -->
+	<!-- px4.launch looks to be compatible for AirSim integration-->
 
 	<arg name="fcu_url" default="/dev/ttyACM0:57600" />
 	<arg name="gcs_url" default="" />

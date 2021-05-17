@@ -12,7 +12,8 @@
           <remap from="command/bodyrate_command" to="/mavros/setpoint_raw/attitude"/>
           <param name="ctrl_mode" value="$(arg command_input)" />
           <param name="enable_sim" value="$(arg gazebo_simulation)" />
-          <param name="enable_gazebo_state" value="true"/>
+          <!-- Changed enable_gazebo_state to false -->
+          <param name="enable_gazebo_state" value="false"/>
           <param name="velocity_yaw" value="false"/>
           <param name="max_acc" value="$(arg max_acc)" />
           <param name="Kp_x" value="6.0" />

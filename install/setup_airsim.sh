@@ -17,14 +17,14 @@ BUILD_PX4="false"
 CATKIN_WS=${HOME}/HIVE/catkin_ws_test
 CATKIN_SRC=${HOME}/HIVE/catkin_ws_test/src
 
-#if [ ! -d "$CATKIN_WS" ]; then
-#	echo "Creating $CATKIN_WS ... "
-#	mkdir -p $CATKIN_SRC
-#fi
-#
-#if [ ! -d "$CATKIN_SRC" ]; then
-#	echo "Creating $CATKIN_SRC ..."
-#fi
+if [ ! -d "$CATKIN_WS" ]; then
+	echo "Creating $CATKIN_WS ... "
+	mkdir -p $CATKIN_SRC
+fi
+
+if [ ! -d "$CATKIN_SRC" ]; then
+	echo "Creating $CATKIN_SRC ..."
+fi
 
 # Configure catkin_Ws
 cd $CATKIN_WS
@@ -35,16 +35,20 @@ catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release
 grep -xF 'source '${HOME}'/HIVE/catkin_ws_test/devel/setup.bash' ${HOME}/.bashrc || echo "source $HOME/HIVE/catkin_ws_test/devel/setup.bash" >> $HOME/.bashrc
 ####################################### Setup PX4 v1.10.1 #######################################
 # Copy PX4 SITL param file
-dont_run =1 make px4_sitl_default 10017_iris_depth_camera
-cp $CATKIN_SRC/px4_fast_planner/config/10017_iris_depth_camera ${HOME}/HIVE/PX4-Autopilot/build/px4_sitl_default/etc/
+#dont_run =1 make px4_sitl_default 10017_iris_depth_camera
+dont_run=1 make px4_sitl_default none_iris
+#cp $CATKIN_SRC/px4_fast_planner/config/10017_iris_depth_camera ${HOME}/HIVE/PX4-Autopilot/build/px4_sitl_default/etc/
 cd ${HOME}/HIVE/PX4-Autopilot
 
 #Copying this to  .bashrc file
 grep -xF 'source ~/HIVE/PX4-Autopilot/Tools/setup_gazebo.bash ~/HIVE/PX4-Autopilot ~/HIVE/PX4-Autopilot/build/px4_sitl_default' ${HOME}/.bashrc || echo "source ~/HIVE/PX4-Autopilot/Tools/setup_gazebo.bash ~/HIVE/PX4-Autopilot ~/HIVE/PX4-Autopilot/build/px4_sitl_default" >> ${HOME}/.bashrc
+grep -xF 'source ~/HIVE/AirSim_Codex_Labs/ros/devel/setup.bash' ${HOME}/.bashrc || echo "source ~/HIVE/AirSim_Codex_Labs/ros/devel/setup.bash" >> ${HOME}/.bashrc
 grep -xF 'export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/HIVE/PX4-Autopilot' ${HOME}/.bashrc || echo "export ROS_PACKAGE_PATH=\$ROS_PACKAGE_PATH:~/HIVE/PX4-Autopilot" >> ${HOME}/.bashrc
 grep -xF 'export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/HIVE/PX4-Autopilot/Tools/sitl_gazebo' ${HOME}/.bashrc || echo "export ROS_PACKAGE_PATH=\$ROS_PACKAGE_PATH:~/HIVE/PX4-Autopilot/Tools/sitl_gazebo" >> ${HOME}/.bashrc
 grep -xF 'export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:/usr/lib/x86_64-linux-gnu/gazebo-9/plugins' ${HOME}/.bashrc || echo "export GAZEBO_PLUGIN_PATH=\$GAZEBO_PLUGIN_PATH:/usr/lib/x86_64-linux-gnu/gazebo-9/plugins" >> ${HOME}/.bashrc
 grep -xF 'export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:'${HOME}'/HIVE/catkin_ws_test/src/px4_fast_planner/models' ${HOME}/.bashrc || echo "export GAZEBO_MODEL_PATH=\$GAZEBO_MODEL_PATH:${HOME}/HIVE/catkin_ws_test/src/px4_fast_planner/models" >> ${HOME}/.bashrc
+# Copying AirSim ros path to .bashrc file
+#grep -xF 'export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/HIVE/AirSim_Codex_Labs/ros/src/airsim_ros_pkgs' ${HOME}/.bashrc || echo "export ROS_PACKAGE_PATH=\$ROS_PACKAGE_PATH:~/HIVE/AirSim_Codex_Labs/ros/src" >> ${HOME}/.bashrc
 
 
 

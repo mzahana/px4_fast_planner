@@ -1,0 +1,99 @@
+<launch>
+
+    <!-- For sim -->
+    <arg name="use_gazebo" default="false"/>
+
+    <!-- MAVROS configs -->
+    <arg name="fcu_url" default="udp://:14540@localhost:14557"/>
+
+    <!-- Planner configs -->
+    <arg name="use_kino_planner" default="false" />
+    <arg name="map_size_x" default="100.0"/>
+    <arg name="map_size_y" default="100.0"/>
+    <arg name="map_size_z" default=" 10.0"/>
+
+     <!-- Change these topics so they are now used by airsim-->
+    <arg name="odom_topic" default="/airsim_node/PX4/odom_local_ned" />
+    <arg name="camera_pose_topic" default="/airsim_node/PX4/front_center_custom/pose"/>
+    <arg name="depth_topic" default="/airsim_node/PX4/front_center_custom/DepthPerspective"/>
+
+     <!--Max Velocity and Max Acceleration Parameters-->
+    <arg name="max_vel" default="1.0" />
+    <arg name="max_acc" default="2.5" />
+
+    <!-- Initial drone's position in Gazebo -->
+    <arg name="init_pos_x" default="5.0" />
+    <arg name="init_pos_y" default="0.0" />
+    <!-- takeoff height -->
+    <arg name="takeoff_height" default="1.0" />
+
+    <!-- ROS static transformation -->
+    <!--Change to the airsim transform -->
+    <!--<node pkg="tf" type="static_transform_publisher" name="world_map_linker" args="0 0 0 0 0 0 world map 100" />
+    <node pkg="tf" type="static_transform_publisher" name="tf_camera" args="0.1 0 0.0 -1.57 0 -1.57 base_link camera_link 33"/>-->
+
+    <!-- Launching AirSim-->
+    <include file="$(find airsim_ros_pkgs)/launch/airsim_node.launch"/>
+    
+
+
+    <!-- MAVROS + PX4 -->
+    <include file="$(find px4_fast_planner)/launch/mavros_airsim.launch" >
+        <arg name="use_gazebo" value="$(arg use_gazebo)"/>
+        <arg name="fcu_url" value="$(arg fcu_url)"/>
+    </include>
+
+    <!-- Fast planner -->
+    <include unless="$(arg use_kino_planner)" file="$(find px4_fast_planner)/launch/px4_topo_replan.launch" >
+        <arg name="map_size_x" default="$(arg map_size_x)"/>
+        <arg name="map_size_y" default="$(arg map_size_y)"/>
+        <arg name="map_size_z" default="$(arg map_size_z)"/>
+
+        <arg name="odom_topic" default="$(arg odom_topic)" />
+        <arg name="depth_topic" default="$(arg depth_topic)"/>
+        <arg name="camera_pose_topic" default="$(arg camera_pose_topic)"/>
+    </include>
+
+    <include if="$(arg use_kino_planner)" file="$(find px4_fast_planner)/launch/px4_kino_replan.launch" >
+        <arg name="map_size_x" default="$(arg map_size_x)"/>
+        <arg name="map_size_y" default="$(arg map_size_y)"/>
+        <arg name="map_size_z" default="$(arg map_size_z)"/>
+
+        <arg name="odom_topic" default="$(arg odom_topic)" />
+        <arg name="depth_topic" default="$(arg depth_topic)"/>
+        <arg name="camera_pose_topic" default="$(arg camera_pose_topic)"/>
+    </include>
+    <!--include file="$(find px4_fast_planner)/launch/px4_kino_replan.launch" /-->
+
+    <!-- Geometric controller -->
+    <include file="$(find px4_fast_planner)/launch/geometric_controller.launch">
+        <arg name="gazebo_simulation" value="$(arg use_gazebo)" />
+        <arg name="max_acc" value="$(arg max_acc)" />
+        <param name="Kp_x" value="6.0" />
+        <param name="Kp_y" value="6.0" />
+        <param name="Kp_z" value="10.0" />
+        <param name="Kv_x" value="1.5" />
+        <param name="Kv_y" value="1.5" />
+        <param name="Kv_z" value="3.5" />
+        <arg name="init_pos_x" value="0.0" />
+        <arg name="init_pos_y" value="0.0" />
+        <arg name="init_pos_z" value="$(arg takeoff_height)" />
+    </include>
+
+    <!-- Camera pose publisher -->
+    <!-- This node publishes tf from parent_frame to child_frame-->
+    <!--<node pkg="px4_fast_planner" name="camera_pose_publisher" type="camera_pose_publisher.py" output="screen">
+        <param name="parent_frame" value="world" />
+        <param name="child_frame" value="camera_link" />
+        <param name="pose_topic" value="camera/pose" />
+    </node>-->
+
+    <node pkg="px4_fast_planner" name="traj_msg_converter" type="trajectory_msg_converter.py" output="screen">
+        <param name="fast_planner_traj_topic" value="planning/ref_traj"/>
+        <param name="traj_pub_topic" value="command/trajectory"/>
+    </node>
+
+    <!-- Rviz -->
+    <include file="$(find px4_fast_planner)/launch/rviz.launch" />
+
+</launch>
